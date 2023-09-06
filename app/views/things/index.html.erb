@@ -1,0 +1,41 @@
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Things</h1>
+  
+    <div id="myGrid" style="height: 200px; width:500px;" class="ag-theme-alpine"></div>
+
+    <%= link_to 'New thing', new_thing_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+</div>
+
+<script type="module">
+
+  import { Grid } from "ag-grid-community"
+
+  var gridOptions = {
+    columnDefs: [
+      { headerName: 'Name', field: 'name' },
+      { headerName: 'Description', field: 'description' },
+      { headerName: 'Price', field: 'price' }
+    ],
+    rowData: JSON.parse('<%= raw escape_javascript(@things.to_json) %>')
+  }
+  var gridDiv = document.querySelector('#myGrid')
+  var agGrid = new Grid(gridDiv, gridOptions)
+
+  // async function loadCars() {
+  //   const response = await fetch("/things.json");
+  //   cars = await response.json();
+  //   console.log(cars);
+  // }
+
+  // document.addEventListener('DOMContentLoaded', function() {
+  //   loadCars()
+  //   gridOptions.api.setRowData(cars)
+  //   gridOptions.columnApi.autoSizeColumns()
+  // })
+
+</script>
